@@ -20,7 +20,6 @@ def solve_linf(a, b):
 
 	return sol['x'], sol['s']
 
-
 def solve_lone(a, b):
 	m = a.shape[0]
 	n = a.shape[1]

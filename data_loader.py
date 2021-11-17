@@ -23,6 +23,18 @@ def load_npy(number):
 	
 	return a, b
 
+def load_signal():
+	with open("./q3/A.npy", 'rb') as f:
+		data = np.load(f, allow_pickle=True).item()
+		A = data['A']
+		f.close()
+	with open("./q3/x0.npy", 'rb') as f:
+		data = np.load(f, allow_pickle=True).item()
+		x0 = data['x0']
+		f.close()
 
+	return A, x0
+
+	
 if __name__ == "__main__":
 	mat_to_np(argv[1])
