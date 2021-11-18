@@ -78,6 +78,7 @@ def first_order_method(data, func, grad, cvec, epsilon, m, n, u=1.):
 	# print('func shape: ' + str(func(x, cvec, data[0], data[1], u).size))
 	# print('grad shape: ' + str(grad(x, cvec, data[0], data[1], u).size))
 	iteration=0
+	errors = []
 	while np.linalg.norm(grad(x, cvec, data[0], data[1], u)) > epsilon:
 		# print(iteration, func(x, cvec, data[0], data[1], u))
 		step_dir = -1*grad(x, cvec, data[0], data[1], u)
@@ -85,4 +86,5 @@ def first_order_method(data, func, grad, cvec, epsilon, m, n, u=1.):
 		# print('step len: '+str(step_len))
 		x += (step_len * step_dir)
 		iteration +=1
-	return x, func(x, cvec, data[0], data[1], u)[0]
+		errors.append(func(x, cvec, data[0], data[1], u)[0][0])
+	return x, func(x, cvec, data[0], data[1], u)[0], errors
