@@ -5,6 +5,7 @@ from scipy.linalg import cho_factor, cho_solve
 
 
 def solve_linf(a, b):
+	"""Construct appropriate matrices then solve the l infinity norm approximation LP"""
 	m = a.shape[0]
 	n = a.shape[1]
 
@@ -21,6 +22,7 @@ def solve_linf(a, b):
 	return sol['x'], sol['s']
 
 def solve_lone(a, b):
+	"""Construct appropriate matrices then solve the l1 norm approximation LP"""
 	m = a.shape[0]
 	n = a.shape[1]
 
@@ -40,6 +42,7 @@ def solve_lone(a, b):
 
 
 def solve_ltwo(a, b):
+	"""Solve l2 problem using least squares"""
 	S = np.matmul(a.T, a)
 	q = np.matmul(a.T, b)
 	cho_fac = cho_factor(S)

@@ -29,7 +29,7 @@ def hessian_phi(A, b, t, x, u):
 	graduu = np.diag(np.divide(1., np.square(u+x)) + np.divide(1., np.square(u-x)))
 
 	gradux = np.diag(np.divide(1., np.square(u+x)) - np.divide(1., np.square(u-x)))
-
+	
 	return np.block([[gradxx, gradux], [gradux, graduu]])
 
 
@@ -63,7 +63,19 @@ def newton_step(A, b, l, t, coords):
 	# xnew = cho_solve(c, vec)
 	return coord_new
 
-def minimum_energy(A, b):
+
+def barrier_method(A, b, l, t0, coords, n, epsilon, delta, mu, grad):
+	"""Full barrier method"""
+	t = t0
+	while 2*n/t > delta:
+		while np.linalg.norm(grad(A, b, l, t, coords[:256], coords[256:])) > epsilon:
+			coords_old = coords
+			coords = newton_step(A, b, l, t, coords_old)
+		t *= mu
+	return coords, t
+
+
+def minimum_energy(A, b, delta):
 	"""
 	Minimum Energy Reconstruction
 	"""
